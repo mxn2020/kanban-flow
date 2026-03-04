@@ -1,14 +1,14 @@
 import { ChevronLeft, ChevronRight, Calendar as CalIcon } from "lucide-react";
+import { Button, Badge, Card } from "@geenius-ui/react-css";
 
 export default function CalendarViewPage() {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    // generate a dummy 35-day grid
     const grid = Array.from({ length: 35 }, (_, i) => {
         const dayNum = (i - 2) > 0 && (i - 2) <= 31 ? (i - 2) : "";
-        let items = [];
-        if (dayNum === 14) items = [{ title: "Design API", color: "var(--color-accent-primary)" }];
-        if (dayNum === 15) items = [{ title: "Docs review", color: "var(--color-info)" }, { title: "Weekly sync", color: "var(--color-text-secondary)" }];
-        if (dayNum === 22) items = [{ title: "Release v1.2", color: "var(--color-danger)" }];
+        let items: { title: string; color: string }[] = [];
+        if (dayNum === 14) items = [{ title: "Design API", color: "accent" }];
+        if (dayNum === 15) items = [{ title: "Docs review", color: "info" }, { title: "Weekly sync", color: "secondary" }];
+        if (dayNum === 22) items = [{ title: "Release v1.2", color: "destructive" }];
 
         return { dayNum, items, isToday: dayNum === 15 };
     });
@@ -17,15 +17,15 @@ export default function CalendarViewPage() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--space-6)" }}>
             <h1 style={{ fontSize: "var(--font-size-xl)", fontWeight: 700, display: "flex", alignItems: "center", gap: "var(--space-3)" }}><CalIcon style={{ color: "var(--color-accent-primary)" }} /> October 2026</h1>
             <div style={{ display: "flex", gap: "var(--space-2)" }}>
-                <button className="btn btn-sm">Today</button>
+                <Button variant="outline" size="sm">Today</Button>
                 <div style={{ display: "flex", gap: 4, margin: "0 var(--space-2)" }}>
-                    <button className="btn btn-sm" style={{ padding: 6 }}><ChevronLeft size={16} /></button>
-                    <button className="btn btn-sm" style={{ padding: 6 }}><ChevronRight size={16} /></button>
+                    <Button variant="outline" size="sm" icon={<ChevronLeft size={16} />} />
+                    <Button variant="outline" size="sm" icon={<ChevronRight size={16} />} />
                 </div>
             </div>
         </div>
 
-        <div className="card" style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--color-bg-card)" }}>
+        <Card className="calendar-card-wrapper" padding="none">
             <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-secondary)" }}>
                 {days.map(d => <div key={d} style={{ padding: "10px", textAlign: "center", fontWeight: 600, fontSize: "12px", color: "var(--color-text-secondary)" }}>{d}</div>)}
             </div>
@@ -39,14 +39,14 @@ export default function CalendarViewPage() {
                         )}
                         <div style={{ display: "flex", flexDirection: "column", gap: 2, flex: 1, overflowY: "auto" }}>
                             {cell.items.map((item, j) => (
-                                <div key={j} style={{ background: item.color, color: "white", fontSize: "11px", fontWeight: 600, padding: "2px 6px", borderRadius: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                <Badge key={j} size="sm" variant={item.color === "destructive" ? "destructive" : "default"}>
                                     {item.title}
-                                </div>
+                                </Badge>
                             ))}
                         </div>
                     </div>
                 ))}
             </div>
-        </div>
+        </Card>
     </div>);
 }

@@ -1,4 +1,5 @@
 import { Plus, MoreHorizontal, MessageSquare, Paperclip, Clock } from "lucide-react";
+import { Button, Badge, Card } from "@geenius-ui/react-css";
 
 export default function BoardViewPage() {
     const lists = [
@@ -29,8 +30,8 @@ export default function BoardViewPage() {
                 <p style={{ color: "var(--color-text-secondary)", fontSize: "13px" }}>Private workspace • 4 members</p>
             </div>
             <div style={{ display: "flex", gap: "var(--space-2)" }}>
-                <button className="btn btn-primary btn-sm"><Plus size={14} /> Share</button>
-                <button className="btn btn-ghost"><MoreHorizontal size={18} /></button>
+                <Button variant="primary" size="sm" icon={<Plus size={14} />}>Share</Button>
+                <Button variant="ghost" icon={<MoreHorizontal size={18} />} />
             </div>
         </div>
 
@@ -39,36 +40,38 @@ export default function BoardViewPage() {
                 <div key={list.id} className="kanban-list">
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--space-3)", padding: "0 var(--space-1)" }}>
                         <h2 style={{ fontSize: "14px", fontWeight: 600 }}>{list.title} <span style={{ color: "var(--color-text-tertiary)", fontWeight: 400, marginLeft: 4 }}>{list.cards.length}</span></h2>
-                        <button className="btn-ghost" style={{ padding: 4, borderRadius: "var(--radius-sm)", color: "var(--color-text-secondary)" }}><MoreHorizontal size={16} /></button>
+                        <Button variant="ghost" size="sm" icon={<MoreHorizontal size={16} />} />
                     </div>
 
                     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)", overflowY: "auto", flex: 1, minHeight: 10 }}>
                         {list.cards.map(card => (
-                            <div key={card.id} className="kanban-card">
+                            <Card key={card.id} padding="md" className="kanban-card">
                                 <div style={{ display: "flex", gap: 4, marginBottom: "var(--space-2)", flexWrap: "wrap" }}>
                                     {card.labels.map(l => (
-                                        <span key={l} style={{ fontSize: "11px", fontWeight: 600, padding: "2px 6px", borderRadius: "var(--radius-sm)", background: l === "Critical" || l === "High" ? "var(--color-danger)" : l === "Done" ? "var(--color-success)" : "var(--color-accent-primary)", color: "white" }}>{l}</span>
+                                        <Badge key={l} size="sm" variant={l === "Critical" || l === "High" ? "destructive" : l === "Done" ? "success" : "default"}>{l}</Badge>
                                     ))}
                                 </div>
                                 <h3 style={{ fontSize: "14px", fontWeight: 500, lineHeight: 1.4, marginBottom: "var(--space-3)" }}>{card.title}</h3>
 
                                 <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", color: "var(--color-text-tertiary)", fontSize: "12px" }}>
                                     {card.due && (
-                                        <span style={{ display: "flex", alignItems: "center", gap: 4, color: card.due === "Overdue" ? "var(--color-danger)" : card.due === "Today" ? "var(--color-warning)" : card.due === "Done" ? "var(--color-success)" : "inherit", background: card.due === "Overdue" || card.due === "Today" || card.due === "Done" ? "var(--color-bg-primary)" : "transparent", padding: card.due === "Overdue" || card.due === "Today" || card.due === "Done" ? "2px 6px" : 0, borderRadius: "var(--radius-sm)" }}><Clock size={12} /> {card.due}</span>
+                                        <Badge size="sm" variant={card.due === "Overdue" ? "destructive" : card.due === "Today" ? "warning" : card.due === "Done" ? "success" : "secondary"}>
+                                            <Clock size={12} /> {card.due}
+                                        </Badge>
                                     )}
                                     {card.comments > 0 && <span style={{ display: "flex", alignItems: "center", gap: 4 }}><MessageSquare size={12} /> {card.comments}</span>}
                                     {card.attachments > 0 && <span style={{ display: "flex", alignItems: "center", gap: 4 }}><Paperclip size={12} /> {card.attachments}</span>}
                                 </div>
-                            </div>
+                            </Card>
                         ))}
                     </div>
 
-                    <button className="btn-ghost" style={{ width: "100%", marginTop: "var(--space-2)", padding: "8px", color: "var(--color-text-secondary)", fontWeight: 500, display: "flex", alignItems: "center", gap: 6, justifyContent: "flex-start" }}><Plus size={16} /> Add a card</button>
+                    <Button variant="ghost" size="sm" icon={<Plus size={16} />} className="kanban-add-card">Add a card</Button>
                 </div>
             ))}
 
             <div style={{ width: 300, flexShrink: 0 }}>
-                <button className="btn" style={{ width: "100%", background: "rgba(255,255,255,0.5)", borderStyle: "dashed", padding: "12px", justifyContent: "flex-start" }}><Plus size={16} /> Add another list</button>
+                <Button variant="outline" icon={<Plus size={16} />} className="kanban-add-list">Add another list</Button>
             </div>
         </div>
     </div>);

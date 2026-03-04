@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Columns, Calendar, Settings, Hash, Plus, ChevronDown } from "lucide-react";
+import { Button, Avatar } from "@geenius-ui/react-css";
 import ThemeToggle from "./ThemeToggle";
+
 export default function Sidebar() {
     const loc = useLocation();
     const links = [
@@ -24,7 +26,7 @@ export default function Sidebar() {
                 <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", padding: "6px 8px", color: "var(--color-text-secondary)", borderRadius: "var(--radius-sm)", fontWeight: 500 }}><Hash size={14} /> Q4 Marketing</div>
                 <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", padding: "6px 8px", color: "var(--color-text-secondary)", borderRadius: "var(--radius-sm)", fontWeight: 500 }}><Hash size={14} /> Roadmap Planner</div>
             </div>
-            <button className="btn btn-ghost btn-sm" style={{ width: "100%", marginTop: "var(--space-2)", justifyContent: "flex-start" }}><Plus size={14} /> Create Board</button>
+            <Button variant="ghost" size="sm" icon={<Plus size={14} />} className="sidebar-create-btn">Create Board</Button>
         </div>
 
         <div style={{ padding: "var(--space-4)", flex: 1 }}>
@@ -36,7 +38,7 @@ export default function Sidebar() {
 
         <div style={{ padding: "var(--space-4)", borderTop: "1px solid var(--color-border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--color-accent-primary)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 600 }}>MN</div>
+                <Avatar fallback="MN" size="sm" />
                 <div style={{ fontSize: "13px", fontWeight: 600 }}>Workspace</div>
             </div>
             <ThemeToggle />
